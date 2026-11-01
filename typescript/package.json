@@ -1,0 +1,23 @@
+{
+  "name": "typescript-interview-prep",
+  "version": "1.0.0",
+  "description": "TypeScript demonstration project for senior-software-engineer interview preparation.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:legacy": "tsc -p tsconfig.legacy.json",
+    "run:decorators": "npm run build:legacy && node dist/07-decorators.js",
+    "run:enums": "npm run build:legacy && node dist/06-enums-vs-literals.js"
+  },
+  "keywords": [
+    "typescript",
+    "interview-prep"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  }
+}
