@@ -1,0 +1,28 @@
+{
+  // Node's native TypeScript support only *strips* type syntax — it refuses
+  // to run source that needs real code generation: enums with computed
+  // bodies, decorators, and constructor parameter properties all throw
+  // ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX if you `node file.ts` them directly.
+  //
+  // 06-enums-vs-literals.ts and 07-decorators.ts intentionally use that
+  // syntax (that's the point of those files), so they can't be run with
+  // `node src/06-....ts` the way every other example in this project can.
+  // This config compiles just those two files to real JS in dist/, which
+  // you then run with plain `node`. See package.json's `run:enums` /
+  // `run:decorators` scripts, and the README.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "module": "NodeNext",
+    "target": "ES2023",
+    "outDir": "dist",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    // Neither of the two files compiled by this config imports a local
+    // ".ts" module, so this doesn't need to be on here (and the base
+    // config only allows it because "noEmit" is true there, which isn't
+    // true in this emitting config).
+    "allowImportingTsExtensions": false
+  },
+  "include": ["src/06-enums-vs-literals.ts", "src/07-decorators.ts"]
+}

@@ -1,0 +1,65 @@
+{
+  // This is the config used for day-to-day type-checking (`npm run typecheck`).
+  // It targets modern JS because our examples are meant to be run two ways:
+  //   1. Directly via `node <file>.ts`, using Node's native TypeScript support
+  //      (which only *strips* type annotations — it does not transform syntax
+  //      like decorators or enums; see 06 and 07 for why that matters).
+  //   2. Via `tsc` for a real compile-time check across the whole project.
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2023"],
+    "types": ["node"],
+    "rootDir": "src",
+    "outDir": "dist",
+
+    // We import local modules with their real, explicit ".ts" extension
+    // (e.g. "./modules/logger.ts") rather than extensionless, because
+    // that's what Node's own ESM resolution requires when you actually
+    // run these files with `node`. `tsc` normally rejects ".ts" in an
+    // import specifier (it looks like you meant to import the TS source
+    // into a bundler); this flag tells it that's intentional.
+    "allowImportingTsExtensions": true,
+
+    // --- Strict mode: on, deliberately, and not just as a checkbox. ---
+    // "strict" bundles noImplicitAny, strictNullChecks, strictFunctionTypes,
+    // strictBindCallApply, strictPropertyInitialization, noImplicitThis, and
+    // alwaysStrict. Senior engineers default new projects to this because:
+    //   - noImplicitAny stops types from silently degrading to `any`, which
+    //     is where most "TypeScript didn't catch this bug" complaints come
+    //     from — it's almost always implicit `any`, not a weak type system.
+    //   - strictNullChecks is the single highest-value flag: it turns
+    //     "cannot read property of undefined" from a runtime incident into
+    //     a compile error. Codebases that skip it get almost no benefit
+    //     from TypeScript at all.
+    // Turning strict mode on *after* a codebase has grown is expensive
+    // (hundreds of newly-surfaced errors). Turning it on at project start
+    // costs nothing. There is essentially no good reason to leave it off
+    // on a new project in 2026.
+    "strict": true,
+
+    // Extra checks beyond `strict` that senior reviewers also expect:
+    "noUncheckedIndexedAccess": true, // arr[i] is `T | undefined`, not `T`
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Module/interop hygiene:
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+
+    // We never emit from this config — Node runs the .ts files directly,
+    // and the few files that need real codegen (decorators, enums) are
+    // compiled separately via tsconfig.legacy.json. This config exists
+    // purely to catch type errors.
+    "noEmit": true
+  },
+  "include": ["src/**/*.ts"]
+}

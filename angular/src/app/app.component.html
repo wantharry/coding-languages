@@ -1,0 +1,19 @@
+<header class="topbar">
+  <h1>Angular Senior-Interview Prep</h1>
+  <p class="subtitle">Working examples of the concepts senior Angular interviews actually probe.</p>
+</header>
+
+<nav class="demo-nav">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+  <a routerLink="/components" routerLinkActive="active">Components &amp; &#64;Input/&#64;Output</a>
+  <a routerLink="/dependency-injection" routerLinkActive="active">DI &amp; Services</a>
+  <a routerLink="/lifecycle" routerLinkActive="active">Lifecycle Hooks</a>
+  <a routerLink="/rxjs" routerLinkActive="active">RxJS Basics</a>
+  <a routerLink="/data-binding" routerLinkActive="active">Data Binding</a>
+  <a routerLink="/directives" routerLinkActive="active">Directives</a>
+  <a routerLink="/change-detection" routerLinkActive="active">Change Detection</a>
+</nav>
+
+<main class="demo-content">
+  <router-outlet />
+</main>
